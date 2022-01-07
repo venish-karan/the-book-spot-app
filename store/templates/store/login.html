@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+<body>
+    <section class="vh-100" style="background-color: #508bfc;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card shadow-2-strong" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+
+                <h3 class="mb-5">Sign in</h3>
+
+                <div class="form-outline mb-4">
+                    <form action="{% url 'loginPage' %}" method='post'>
+                    {% csrf_token %}
+                        <input type="text" name="username" placeholder="User Name" id="typeEmailX-2" class="form-control form-control-lg" />
+                        </div>
+
+                        <div class="form-outline mb-4">
+                        <input type="password" name="password" id="typePasswordX-2" placeholder="Password" class="form-control form-control-lg" />
+                        </div>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button><br>
+                    </form>
+
+                    <a href="{% url 'registerPage' %}" style="text-decoration: none;" ><button class="btn btn-dark btn-lg btn-block" >Register</button></a>
+            </div>
+                {% for message in messages %}
+                <center><h3 class="mb-5">{{ message }}. please click here to <a href="{% url 'registerPage' %}">Register</a></h3></center>
+                {% endfor %}
+        </div>
+        </div>
+    </div>
+    </section>
+</body>
+</html>
+

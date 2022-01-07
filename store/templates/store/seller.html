@@ -1,0 +1,61 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+  <!-- {% if seller != None %}
+    {{seller.name}}
+  {% endif %} -->
+<div class="row">
+    <div class="col-lg-6">
+        <div class="box-element" id="form-wrapper">
+            <form id="form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div id="user-info">
+                    <label for="product_name">Product Name</label>
+                    <input required class="form-control" type="text" name="product_name" placeholder="Product Name.."> <br>
+                    <label for="product_price">Price</label>
+                    <input required class="form-control" type="number" name="product_price" id="product_price" step=".01"><br>
+                    <label for="digital">Digital Product/Online Product</label>
+                    <select required class="form-control" name="digital" id="digital">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select> <br>
+                    <label for="image">Product Image</label>
+                    <input required class="form-control" type="file" name="image" id="image"><br>
+                    <label for="image">Description</label>
+                    <textarea required class="form-control" name="description" id="description" cols="30" rows="5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate nesciunt, sapiente delectus quod repellendus, quis, rerum magni eaque aliquam sequi repudiandae similique nemo perspiciatis expedita illo dolores voluptates corrupti architecto?</textarea><br>
+                    <a href="{% url 'store' %}"><input required class="form-control" type="submit" value="Submit"></a><br>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="box-element">
+            <h3>User Profile</h3>
+            <hr>
+            <h5>User Name : <h3>{{seller.user}}</h3></h5>
+            <hr>
+            <h5>Name : <h3>{{seller.name}}</h3></h5>
+            <hr>
+            <h5>Email : <h3>{{seller.email}}</h3></h5>
+            <hr>
+            <h5>Products on store listing : </h5> 
+            <hr>
+            <div class="cart-row">
+                    <div style="flex: 2;"><strong>Image</strong></div>
+                    <div style="flex: 2;"><strong>Item</strong></div>
+                    <div style="flex: 1;"><strong>Price</strong></div>
+                    <div style="flex: 1;"><strong>Quantity</strong></div>
+                </div>
+            {% for product in products %}
+				<div class="cart-row">
+					<div style="flex:2"><img class="row-image" src="{{ product.imageURL }}"></div>
+					<div style="flex:2; word-break: break-all;"><p><strong>{{ product.name }}</strong></p></div>
+					<div style="flex:1"><p>{{ product.price|floatformat:2 }}</p></div>
+					<div style="flex:1"><p>x1</p></div>
+				</div>
+			{% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

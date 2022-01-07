@@ -1,0 +1,83 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+    <div class="row" >
+        {% for product in products %}
+        <div class="col-lg-4">
+            <img class="thumbnail" src="{{ product.imageURL }}" alt="...">
+            <div class="box-element product">
+                <h6 style="word-break: break-all;"><strong>{{ product.name }}</strong></h6>
+                <hr>
+                {% if request.user.is_authenticated %}
+                    <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart" >Add to Cart</button>
+                {% endif %}
+                <button data-name="{{ product.name }}" data-image="{{ product.imageURL }}" data-description="{{ product.description }}" data-price="{{ product.price }}" class="btn btn-outline-success view-product" id="open">View</button>
+                <h4 style="display: inline-block; float: right;"><strong>Rs.{{ product.price|floatformat:2 }}</strong></h4>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="modal-container" id="modal-container">
+        <div class="modal-pop-up" id="modal-pop-up">
+
+            <div class="row" >
+                <div class="col-lg-6">
+                    <img class="thumbnail" src="#" alt="..." id="modal-pic" width="530px" height="360px" max-width="100%">
+                    <div class="box-element product">
+                        <h3 id="modal-title" style="word-break: break-all;"><strong>Product Name</strong></h3>
+                        <hr>
+                        
+                    </div>
+                    
+                </div>
+                <!-- id="modal-price-description" -->
+                <div class="col-lg-6">
+                    <div class="box-element product" id="modal-pic" >
+
+                        <h4 id="modal-price"><strong>Price</strong></h4>
+                        <hr>
+                        <h4>About this item:</h4>
+                        <p id="modal-p"></p>
+                        <button class="btn btn-outline-success view-product" id="close">Close</button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        const open = document.getElementById('open');
+        const close = document.getElementById('close');
+        const modal_container = document.getElementById('modal-container');
+
+        const viewBtns = document.getElementsByClassName('view-product');
+
+        for(i=0; i < viewBtns.length; i++) {
+            viewBtns[i].addEventListener('click', function() {
+            modal_container.classList.add('show');
+            var name = this.dataset.name
+            var image = this.dataset.image
+            var price = this.dataset.price
+            var description = this.dataset.description
+            // console.log(name, image, price, description)
+            modalContent(name, price, image, description)
+        });
+        }
+        close.addEventListener('click', () => {
+            modal_container.classList.remove('show');
+            // document.getElementById('modal-pop-up').innerHTML = '';
+
+        });
+
+        
+
+        function modalContent(name, price, image, description) {
+            document.getElementById('modal-title').innerText = name;
+            document.getElementById('modal-pic').src = image;
+            document.getElementById('modal-price').innerText = `Price: Rs.${price}`;
+            document.getElementById('modal-p').innerText = description;
+        }
+    </script>
+
+{% endblock content %}
