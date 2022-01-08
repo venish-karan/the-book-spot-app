@@ -170,6 +170,8 @@ def processOrder(request):
     order.save()
 
     if order.shipping == True:
+        ShippingAddress.objects.filter(
+            customer=customer).delete()
         ShippingAddress.objects.create(
             customer=customer,
             order=order,
