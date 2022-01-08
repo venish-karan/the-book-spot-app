@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-y&p@-^6%l0tr100#gzjc&!qrhb83p-m_8z1r$(nosezkg+hfgn
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['book-store-web-ap.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['the-book-spot-app.herokuapp.com','127.0.0.1']
 
 
 # Application definition
