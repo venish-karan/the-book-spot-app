@@ -92,15 +92,15 @@
            </ul>
             
             <div class="form-inline my-2 my-lg-0">
-                <form method="get" action="/search" class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query" id="query">
-                    <button class="btn btn-warning" type="submit">Search</button>
-                </form>
-                &emsp;
+                
                 {% if request.user.is_authenticated %}
-                    <h5 style="color: white;">Hello, {{ request.user }}</h5>
+                    <h5 style="color: white; padding-top: 5px;"> Hello, {{ request.user }}</h5>
+
                     &emsp;
                     <a href="{% url 'logoutUser' %}" class="btn btn-warning">Logout</a>
+                    &emsp;
+                    <a href="{% url 'profile' %}" class="btn btn-warning">Profile</a>
+                    
                 {% else %}
                     <a href="{% url 'loginPage' %}" class="btn btn-warning">Login</a>
                 {% endif %}
@@ -108,6 +108,12 @@
                     &emsp;
                     <a href="{% url 'seller' %}" class="btn btn-warning">Seller Account</a>
                 {% endif %}
+                &emsp;
+                <form method="get" action="/search" class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query" id="query">
+                    <button class="btn btn-warning" type="submit">Search</button>
+                </form>
+                &emsp;
                 <a href="{% url 'cart' %}">
                     <img  id="cart-icon" src="{% static 'images/cart.jpg' %}">
                 </a>

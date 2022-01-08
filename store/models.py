@@ -11,6 +11,19 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
 
+class Profile(models.Model):
+    customer = models.OneToOneField(Customer,null=True, blank=True, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="static/images", null=True, blank=True)
+
+
+    @property
+    def imageURL(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
+
 class Product(models.Model):
     name = models.CharField(max_length=200, null=True)
     price = models.DecimalField(max_digits=7, decimal_places=2)

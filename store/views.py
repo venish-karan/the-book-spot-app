@@ -249,7 +249,6 @@ def seller(request):
         cartItems = data['cartItems']
         products = Product.objects.filter(customer=seller)
         products = products[::-1]
-        print(products)
 
         if request.method == 'POST':
             name = request.POST.get('product_name')
@@ -274,4 +273,46 @@ def seller(request):
         context = {'cartItems': cartItems, 'seller': seller, 'products': products}
         return render(request, 'store/seller.html', context)
 
-        
+@login_required(login_url="loginPage")
+def profile(request):
+
+    if request.user.is_authenticated:
+
+        customer = request.user.customer
+
+        data = cartData(request)
+        cartItems = data['cartItems']
+
+        try:
+            shippingAddress = ShippingAddress.objects.get(customer=customer)
+            profilePic = Profile.objects.get(customer=customer)
+
+        except ShippingAddress.DoesNotExist:
+            # return redirect('loginPage')
+            shippingAddress = None
+            profilePic = None
+
+        if shippingAddress != None :
+            if request.method == 'POST':
+                pimage = request.FILES.get('image')
+                Profile.objects.filter(customer=customer).delete()
+                Profile.objects.create(
+                    customer=customer,
+                    image = pimage
+                )
+        else:
+            if request.method == 'POST':
+                data = request.POST
+                ShippingAddress.objects.create(
+                    customer=customer,
+                    address=data['address'],
+                    city=data['city'],
+                    state=data['state'],
+                    zipcode=data['zipcode']
+                )
+                Profile.objects.create(
+                    customer=customer,
+                )
+
+    context = {'shippingAddress' : shippingAddress, 'profilePic' : profilePic, 'cartItems': cartItems}
+    return render(request, 'store/profile.html', context)

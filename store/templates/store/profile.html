@@ -1,0 +1,77 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+            
+        {% if shippingAddress != None %}
+            <div class="col-lg-6">
+                <div class="box-element">
+                    <h3>User Profile</h3>
+                    <hr>
+                    <h5>User Name : <h3>{{shippingAddress.customer}}</h3></h5>
+                    <hr>
+                    <h5>Address : <h3>{{shippingAddress.address}}</h3></h5>
+                    <hr>
+                    <h5>City : <h3>{{shippingAddress.city}}</h3></h5>
+                    <hr>
+                    <h5>State : <h3>{{shippingAddress.state}}</h3></h5>
+                    <hr>
+                    <h5>Zipcode : <h3>{{shippingAddress.zipcode}}</h3></h5>
+                    <hr>
+                </div>
+            </div>
+        {% else %}
+        <div class="col-lg-6">
+            <div class="box-element" id="form-wrapper">
+                <form id="form" method="post">
+					{% csrf_token %}
+                    <div id="shipping-info">
+                        <hr>
+						<p>Shipping Information:</p>
+						<hr>
+						<div class="form-field">
+							<input class="form-control" type="text" name="address" placeholder="Address..">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="city" placeholder="City..">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="state" placeholder="State..">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="country" placeholder="Zip code..">
+						</div>
+                    </div>
+
+                    <hr>
+					<input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
+                </form>
+            </div>
+        </div>
+        {% endif %}
+        {% if shippingAddress != None %}
+        <div class="col-lg-6">
+            <div class="box-element">
+                <h3>Profile Picture:</h3>
+                <img class="thumbnail" src="{{ profilePic.imageURL }}" alt="..." style="height: 350px;">
+                <hr>
+                <form id="form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div id="user-info">
+                        <label for="image">Change Profile:</label>
+                        <input class="form-control" type="file" name="image" id="image">
+                        <br>
+                        
+                        <a href="{% url 'profile' %}"><input required class="form-control" type="submit" value="Submit"></a>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock content %}
