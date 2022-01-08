@@ -1,1 +1,1 @@
-web: gunicorn the_book_spot.wsgi --log-file -
+web: gunicorn the_book_spot.wsgi
