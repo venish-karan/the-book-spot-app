@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-y&p@-^6%l0tr100#gzjc&!qrhb83p-m_8z1r$(nosezkg+hfgn'
 
-DEBUG = False
+DEBUG = True
 
 
 ALLOWED_HOSTS = ['the-book-spot-app.herokuapp.com','127.0.0.1']
