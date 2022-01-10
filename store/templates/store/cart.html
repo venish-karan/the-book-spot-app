@@ -15,7 +15,7 @@
                         </th>
 
                         <th>
-                            <h5>Total: <strong>Rs.{{ order.get_cart_total|floatformat:2 }}</strong></h5>
+                            <h5>Total: <strong>Rs. {{ order.get_cart_total|floatformat:2 }}</strong></h5>
                         </th>
                         <th>
                             <a class="btn btn-warning" style="float: right; margin: 5px;" href="{% url 'checkout' %}">Checkout</a>
@@ -39,7 +39,7 @@
                  <div class="cart-row">
                     <div style="flex: 2;"><img class="row-image" src="{{ item.product.imageURL }}" alt="..."></div>
                     <div style="flex: 2; word-break: break-all;">{{ item.product.name }}</div>
-                    <div style="flex: 1;">{{ item.product.price|floatformat:2 }}</div>
+                    <div style="flex: 1;">Rs. {{ item.product.price|floatformat:2 }}</div>
                     <div style="flex: 1;">
                         <p class="quantity">x{{ item.quantity }}</p>
 						<div class="quantity">

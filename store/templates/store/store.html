@@ -1,7 +1,8 @@
 {% extends 'store/main.html' %}
 {% load static %}
 {% block content %}
-    <div class="row" >
+    <div data-role="page" id="First" style="display: block;">
+        <div class="row" >
         {% for product in products %}
         <div class="col-lg-4">
             <img class="thumbnail" src="{{ product.imageURL }}" alt="...">
@@ -11,11 +12,35 @@
                 {% if request.user.is_authenticated %}
                     <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart" >Add to Cart</button>
                 {% endif %}
-                <a href="{% url 'product_view' %}"><button data-name="{{ product.name }}" data-image="{{ product.imageURL }}" data-description="{{ product.description }}" data-price="{{ product.price }}" class="btn btn-outline-success view-product" id="open">View</button></a>
+                <button onclick="move()" data-name="{{ product.name }}" data-image="{{ product.imageURL }}" data-description="{{ product.description }}" data-price="{{ product.price }}" class="btn btn-outline-success view-product" id="open">View</button>
                 <h4 style="display: inline-block; float: right;"><strong>Rs.{{ product.price|floatformat:2 }}</strong></h4>
             </div>
         </div>
         {% endfor %}
+        </div>
+    </div>
+    <div data-role="page" id="Second" style="display: none;">
+
+        <div class="row" >
+    <div class="col-lg-6">
+        <img style="height: 550px;" class="thumbnail" src="#" alt="..." id="modal-pic" width="530px" height="640px" max-width="100%">
+        <div class="box-element product">
+            <h4 id="modal-title" style="word-break: break-all;"><strong>Product Name</strong></h4>
+            
+        </div>
+        
+    </div>
+    <!-- id="modal-price-description" -->
+    <div class="col-lg-6">
+        <div class="box-element product" id="modal-pic" >
+            <h4 id="modal-price"><strong>Price</strong></h4>
+            <hr>
+            <h4>Details:</h4>
+            <p id="modal-p"></p>
+            <button onclick="closeMove()" class="btn btn-outline-success view-product" id="close">Close</button>
+        </div>
+    </div>
+</div>
     </div>
     
     <script type="text/javascript">
@@ -27,13 +52,13 @@
 
         for(i=0; i < viewBtns.length; i++) {
             viewBtns[i].addEventListener('click', function() {
-            modal_container.classList.add('show');
+            // modal_container.classList.add('show');
             var name = this.dataset.name
             var image = this.dataset.image
             var price = this.dataset.price
             var description = this.dataset.description
-            // console.log(name, image, price, description)
-            // modalContent(name, price, image, description)
+            console.log(name, image, price, description)
+            modalContent(name, price, image, description)
         });
         }
         // close.addEventListener('click', () => {
@@ -45,11 +70,23 @@
         
 
         function modalContent(name, price, image, description) {
-            document.getElementById('modal-title').innerText = name;
+            document.getElementById('modal-title').innerText = `Product name: ${name}`;
             document.getElementById('modal-pic').src = image;
             document.getElementById('modal-price').innerText = `Price: Rs.${price}`;
             document.getElementById('modal-p').innerText = description;
         }
     </script>
 
+    <script>
+        function move() {
+            document.getElementById('Second').style.display = 'block';
+            document.getElementById('First').style.display = 'none';
+        }
+
+        function closeMove() {
+            document.getElementById('Second').style.display = 'none';
+            document.getElementById('First').style.display = 'block';
+        }
+
+    </script>
 {% endblock content %}

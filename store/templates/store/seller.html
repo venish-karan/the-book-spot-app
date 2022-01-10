@@ -6,7 +6,7 @@
     {{seller.name}}
   {% endif %} -->
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-5">
         <div class="box-element" id="form-wrapper">
             <form id="form" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -23,13 +23,13 @@
                     <label for="image">Product Image</label>
                     <input required class="form-control" type="file" name="image" id="image"><br>
                     <label for="image">Description</label>
-                    <textarea required class="form-control" name="description" id="description" cols="30" rows="5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate nesciunt, sapiente delectus quod repellendus, quis, rerum magni eaque aliquam sequi repudiandae similique nemo perspiciatis expedita illo dolores voluptates corrupti architecto?</textarea><br>
-                    <a href="{% url 'store' %}"><input required class="form-control" type="submit" value="Submit"></a><br>
+                    <textarea required class="form-control" name="description" id="description" cols="30" rows="5"> Language  : English &#013;&#010; No. of Pages  :  336 pages &#013;&#010; Reading age  :  5 years and up &#013;&#010; Item Weight  :  204 g &#013;&#010; Dimensions  :  10.8 x 2.54 x 17.78 cm &#013;&#010; Country of Origin  :  INDIA &#013;&#010; Net Quantity : 1.00 count &#013;&#010; Generic Name  :  Book</textarea><br>
+                    <button class="form-control" type="submit">Submit</button><br>
                 </div>
             </form>
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-7">
         <div class="box-element">
             <h3>User Profile</h3>
             <hr>
@@ -58,4 +58,5 @@
         </div>
     </div>
 </div>
+ 
 {% endblock content %}

@@ -10,6 +10,8 @@ import datetime
 from .models import *
 from .utils import cookieCart, cartData, guestOrder
 
+from django.contrib import messages
+
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
@@ -309,12 +311,37 @@ def profile(request):
 
         try:
             shippingAddress = ShippingAddress.objects.get(customer=customer)
-            profilePic = Profile.objects.get(customer=customer)
+            
 
-        except ShippingAddress.DoesNotExist:
+            
+
+        except:
             # return redirect('loginPage')
             shippingAddress = None
+            
+
+           
+
+        try:
+            profilePic = Profile.objects.get(customer=customer)
+        except:
             profilePic = None
+
+        try:
+            address=shippingAddress.address
+            city=shippingAddress.city
+            state=shippingAddress.state
+            zipcode=shippingAddress.zipcode
+        except:
+            address=None
+            city=None
+            state=None
+            zipcode=None
+
+        
+        if(address==None or city==None or state==None or zipcode==None):
+            messages.info(request,'your shipping fields are empty.Please Update your Profile')
+            return redirect('update_profile')
 
         if shippingAddress == None :
                 p = Profile.objects.create(
@@ -364,10 +391,10 @@ def update_profile(request):
         
         ShippingAddress.objects.create(
             customer=customer,
-            address=data.get('address', False),
-            city=data.get('city', False),
-            state=data.get('state', False),
-            zipcode=data.get('zipcode', False)
+            address=data.get('address', None),
+            city=data.get('city', None),
+            state=data.get('state', None),
+            zipcode=data.get('zipcode', None)
         )
 
 

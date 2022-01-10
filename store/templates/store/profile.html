@@ -34,7 +34,7 @@
                                 <label for="image">Change Profile:</label>
                                 <input class="form-control" type="file" name="image" id="image">
                                 <br>
-                                <a href="{% url 'store' %}"><input onclick="reload()" id="profile-button" class="form-control" type="submit" value="Submit"></a>
+                                <input id="profile-button" class="form-control" type="submit" value="Submit">
                             </div>
                         </form>
 
@@ -42,14 +42,35 @@
                 
         </div>   
 
-    </div>
-    <script>
-        function reload() {
-            location.reload();
-        }
-    </script>
+    </div> 
+    
+ <!-- <script>
+    document.getElementById('profile-button').addEventListener('submit', 
+    function(event){
+    location.reload();
+    alert('reloaded');
+    });
+</script> -->
+
+  
+{% endblock content %}
+
+
 
     <!-- <script>
+        // your function
+        var my_func = function(event) {
+            event.preventDefault();
+        };
+
+        // your form
+        var form = document.getElementById("form");
+
+        // attach event listener
+        form.addEventListener("submit", my_func, true);
+    </script> -->
+
+      <!-- <script>
         
         function update() {
         document.getElementById('profile-button').classList.add("hidden");
@@ -65,4 +86,3 @@
         document.getElementById('close-clicked').classList.add("hidden");
         }
     </script> -->
-{% endblock content %}

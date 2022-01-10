@@ -86,7 +86,7 @@
                     <a class="nav-link" href="{% url 'checkout' %}">Checkout <span class="sr-only">(current)</span></a>
                </li>
                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'track_order' %}">Track Order <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{% url 'track_order' %}">Order History <span class="sr-only">(current)</span></a>
                </li>
                
            </ul>
@@ -136,6 +136,15 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+
+    {% if messages %}
+    {% for message in messages %}
+    <script>
+        
+    alert("{{ message }}");
+    </script>
+    {% endfor %}
+    {% endif %}
     
 </body>
 </html>
