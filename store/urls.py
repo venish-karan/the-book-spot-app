@@ -1,3 +1,4 @@
+from os import name
 from django.urls import path
 
 from . import views
@@ -15,4 +16,7 @@ urlpatterns = [
     path('track_order', views.track_order, name="track_order"),
     path('seller/', views.seller, name="seller"),
     path('profile/', views.profile, name="profile"),
+    path('success', views.success, name="success"),
+    path('update_profile', views.update_profile, name="update_profile"),
+    path('product_view/', views.product_view, name="product_view"),
     ]

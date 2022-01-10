@@ -1,0 +1,43 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<div class="row">
+<div class="col-lg-6">
+    <img class="thumbnail" src="{% static 'images/profile_update.jpg' %}" alt="Update Profile" style="height: 350px;">
+</div>
+
+<div class="col-lg-6">
+   <div class="box-element" id="form-wrapper">
+        <form id="form" method="post">
+            {% csrf_token %}
+            <div id="shipping-info">
+                <p>Update Information:</p>
+                <hr>
+                <div class="form-field">
+                    <input required class="form-control" type="text" name="address" placeholder="Address..">
+                </div>
+                <br>
+                <div class="form-field">
+                    <input required class="form-control" type="text" name="city" placeholder="City..">
+                </div>
+                <br>
+                <div class="form-field">
+                    <input required class="form-control" type="text" name="state" placeholder="State..">
+                </div>
+                <br>
+                <div class="form-field">
+                    <input required class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+                </div>
+            </div>
+            <input id="form-button" onclick="updated()" class="btn btn-success btn-block" type="submit" value="Continue">
+        </form>
+    </div>
+</div>
+
+</div>
+<script>
+    function updated() {
+        alert("Profile updated");
+    }
+</script>
+{% endblock content %}

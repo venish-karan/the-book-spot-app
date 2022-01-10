@@ -1,3 +1,4 @@
+from typing import ContextManager
 from django.contrib import messages
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
@@ -10,6 +11,7 @@ from .models import *
 from .utils import cookieCart, cartData, guestOrder
 
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 # from django.contrib.auth.forms import UserCreationForm
 
@@ -17,6 +19,8 @@ from django.contrib.auth.decorators import login_required
 # from django.views.decorators.csrf import csrf_exempt
 
 from django.contrib.auth.models import User, auth
+
+import razorpay
 
 def registerPage(request):
 
@@ -46,6 +50,7 @@ def registerPage(request):
                 user.save()
                 c = Customer.objects.create(user=user, name=username, email=email, seller=seller_account)
                 c.save()
+
                 
                 print('user created')
                 return redirect('loginPage')
@@ -107,13 +112,29 @@ def cart(request):
     
 @login_required(login_url="loginPage") # redirect to login page ('/login')
 def checkout(request):
+    order_id = datetime.datetime.now().timestamp()
     data = cartData(request)
 
     cartItems = data['cartItems']
     order = data['order']
     items = data['items']
+
+    if request.user.is_authenticated:
+        customer_name = request.user.customer
+        email = Customer.objects.get(name=customer_name).email
+
+    if request.method == "POST":
+        
+        client = razorpay.Client(auth=("rzp_test_PT3Pc8sZ8I7MzM", "oedq05t6EWIe3fglx0ryQijK"))
+        DATA = {    
+            "amount": 100,
+            "currency": "INR",
+            "payment_capture": "1",  
+        }
+        
+        payment = client.order.create(data=DATA)
     
-    context = {'items': items, 'order': order, 'cartItems': cartItems, 'shipping':False}
+    context = {'items': items, 'order': order, 'cartItems': cartItems, 'shipping':False,'order_id':order_id,"customer_name":customer_name, "email":email}
     return render(request, 'store/checkout.html', context)
 
 def updateItem(request):
@@ -170,8 +191,7 @@ def processOrder(request):
     order.save()
 
     if order.shipping == True:
-        ShippingAddress.objects.filter(
-            customer=customer).delete()
+        ShippingAddress.objects.filter(customer=customer).delete()
         ShippingAddress.objects.create(
             customer=customer,
             order=order,
@@ -180,6 +200,8 @@ def processOrder(request):
             state=data['shipping']['state'],
             zipcode=data['shipping']['zipcode']
         )
+        # ShippingAddress.objects.filter(
+        #     customer=customer).delete()
 
     return JsonResponse('Payment complete!', safe=False)
 
@@ -282,8 +304,8 @@ def profile(request):
 
         customer = request.user.customer
 
-        data = cartData(request)
-        cartItems = data['cartItems']
+        data_items = cartData(request)
+        cartItems = data_items['cartItems']
 
         try:
             shippingAddress = ShippingAddress.objects.get(customer=customer)
@@ -294,27 +316,68 @@ def profile(request):
             shippingAddress = None
             profilePic = None
 
-        if shippingAddress != None :
-            if request.method == 'POST':
-                pimage = request.FILES.get('image')
-                Profile.objects.filter(customer=customer).delete()
-                Profile.objects.create(
-                    customer=customer,
-                    image = pimage
-                )
-        else:
-            if request.method == 'POST':
-                data = request.POST
-                ShippingAddress.objects.create(
-                    customer=customer,
-                    address=data['address'],
-                    city=data['city'],
-                    state=data['state'],
-                    zipcode=data['zipcode']
-                )
-                Profile.objects.create(
+        if shippingAddress == None :
+                p = Profile.objects.create(
                     customer=customer,
                 )
+                p.save()
+                return redirect('update_profile')
+                # data = request.POST
+                # ShippingAddress.objects.create(
+                #     customer=customer,
+                #     address=data['address'],
+                #     city=data['city'],
+                #     state=data['state'],
+                #     zipcode=data['zipcode']
+                # )
+
+        if request.method == "POST":
+            pimage = request.FILES.get('image')
+            Profile.objects.filter(customer=customer).delete()
+            Profile.objects.create(
+                customer=customer,
+                image = pimage
+            )
+            
 
     context = {'shippingAddress' : shippingAddress, 'profilePic' : profilePic, 'cartItems': cartItems}
     return render(request, 'store/profile.html', context)
+
+
+@csrf_exempt
+def success(request):
+    return render(request, "store/success.html")
+
+def update_profile(request):
+
+    data_items = cartData(request)
+    cartItems = data_items['cartItems']
+
+    if request.user.is_authenticated:
+
+        customer = request.user.customer
+
+        data = request.POST
+
+        ShippingAddress.objects.filter(
+        customer=customer).delete()
+        
+        ShippingAddress.objects.create(
+            customer=customer,
+            address=data.get('address', False),
+            city=data.get('city', False),
+            state=data.get('state', False),
+            zipcode=data.get('zipcode', False)
+        )
+
+
+    context={'cartItems': cartItems}
+    return render(request, 'store/update_profile.html', context)
+
+def product_view(request):
+
+    data_items = cartData(request)
+    cartItems = data_items['cartItems']
+
+    context={'cartItems':cartItems}
+    return render(request, 'store/product_view.html', context)
