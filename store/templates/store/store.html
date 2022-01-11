@@ -25,6 +25,7 @@
     <div class="col-lg-6">
         <img style="height: 550px;" class="thumbnail" src="#" alt="..." id="modal-pic" width="530px" height="640px" max-width="100%">
         <div class="box-element product">
+            <h5>Product Name:</h5>
             <h4 id="modal-title" style="word-break: break-all;"><strong>Product Name</strong></h4>
             
         </div>
@@ -33,6 +34,7 @@
     <!-- id="modal-price-description" -->
     <div class="col-lg-6">
         <div class="box-element product" id="modal-pic" >
+            <h5>Price:</h5>
             <h4 id="modal-price"><strong>Price</strong></h4>
             <hr>
             <h4>Details:</h4>
@@ -70,9 +72,9 @@
         
 
         function modalContent(name, price, image, description) {
-            document.getElementById('modal-title').innerText = `Product name: ${name}`;
+            document.getElementById('modal-title').innerText = `${name}`;
             document.getElementById('modal-pic').src = image;
-            document.getElementById('modal-price').innerText = `Price: Rs.${price}`;
+            document.getElementById('modal-price').innerText = `Rs. ${price}`;
             document.getElementById('modal-p').innerText = description;
         }
     </script>
