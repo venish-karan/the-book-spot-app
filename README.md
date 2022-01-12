@@ -37,10 +37,11 @@ https://user-images.githubusercontent.com/74892603/149085312-7fdd5403-45f0-4268-
 ### ⚒Project Architecture:
 ![the-book-spot-architecture](https://user-images.githubusercontent.com/74892603/149085787-a00676ed-c2c6-4709-83b9-f46b81a06933.jpeg)
 
-### ⚙Setup:
+### ⚙How to run our app:
 - Install the packages mentioned in [requirements.txt](https://github.com/venish-karan/the-book-spot-app/blob/master/requirements.txt).
-- Run the [training.py](https://github.com/sudharsanbaskars/CreditCardDefaultersPrediction/blob/main/training.py) file for training.
-- Run the [app.py](https://github.com/sudharsanbaskars/CreditCardDefaultersPrediction/blob/main/app.py) file for running the Flask app in your local system.
+- pip install django
+- then make make migrations and migrate.
+- finally run server
 
 ### Please Go through this [Document](https://docs.google.com/document/d/1XozIJzZrvo_XUVxSlYSaqVH_Joh7YD4L/edit?usp=sharing&ouid=100991138155643495031&rtpof=true&sd=true) for more Info.
 
