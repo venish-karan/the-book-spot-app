@@ -35,7 +35,7 @@ https://user-images.githubusercontent.com/74892603/149085312-7fdd5403-45f0-4268-
 
 ### This project is also Deployed on heroku: https://the-book-spot-app.herokuapp.com
 ### ⚒Project Architecture:
-![architecture](https://user-images.githubusercontent.com/71257512/130731860-f8b5b1c1-5bc1-4a0d-9ad6-307522a5c722.png)
+![the-book-spot-architecture](https://user-images.githubusercontent.com/74892603/149085787-a00676ed-c2c6-4709-83b9-f46b81a06933.jpeg)
 
 ### ⚙Setup:
 - Install the packages mentioned in [requirements.txt](https://github.com/venish-karan/the-book-spot-app/blob/master/requirements.txt).
