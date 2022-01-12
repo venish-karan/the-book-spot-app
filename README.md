@@ -1,6 +1,6 @@
 # The Book Spot App
 
-https://github.com/venish-karan/the-book-spot-app/blob/master/The%20Book%20Spot.webm
+
 
 ### 🔗Description:
 - The repository represents "The Book Spot App".
