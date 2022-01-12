@@ -1,6 +1,6 @@
 # The Book Spot App
 
-https://github.com/venish-karan/the-book-spot-app/blob/master/The%20Book%20Spot%20(1).mp4
+https://user-images.githubusercontent.com/74892603/149085312-7fdd5403-45f0-4268-97f0-cae5c17ef4a4.mp4
 
 ### 🔗Description:
 - The repository represents "The Book Spot App".
